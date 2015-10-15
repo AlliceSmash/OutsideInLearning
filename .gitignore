@@ -192,3 +192,6 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 .svn/
+# Node.js Tools for Visual Studio
+.ntvs_analysis.dat
+
