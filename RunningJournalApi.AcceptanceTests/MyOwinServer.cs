@@ -20,20 +20,6 @@ namespace RunningJournalApi.AcceptanceTests
 
             // Register the WebAPI to the pipeline  
             appBuilder.UseWebApi(configuration);
-            //appBuilder.Run((owinContext) =>
-            //{
-            //    owinContext.Response.ContentType = "text/plain";
-
-            //    // here comes the performance, everythign in the Katana is Async. Living in the current century.  
-            //    // Let's print our obvious message: :)  
-            //    return owinContext.Response.WriteAsync("Hello World.");
-            //});
-            //var config = new HttpConfiguration();
-            //config.Routes.MapHttpRoute(
-            //    "API Default",
-            //    "api/{controller}/{action}/{id}",
-            //    new { id = RouteParameter.Optional });
-            //builder.UseWebApi(config);
         }
     }
 }
