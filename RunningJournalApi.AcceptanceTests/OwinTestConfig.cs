@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json.Serialization;
 using Owin;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 
@@ -37,10 +33,7 @@ namespace RunningJournalApi.AcceptanceTests
     {
         public ICollection<Assembly> GetAssemblies()
         {
-            List<Assembly> baseAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-            var apiAssembly = Assembly.LoadFrom(@"C:\tests\RunningJournalApi\RunningJournalApi\obj\Debug\RunningJournalApi.dll");
-            baseAssemblies.Add(apiAssembly);
-            return baseAssemblies;
+            return new List<Assembly> { typeof(RunningJournalApi.JournalController).Assembly };
         }
     }
 }
