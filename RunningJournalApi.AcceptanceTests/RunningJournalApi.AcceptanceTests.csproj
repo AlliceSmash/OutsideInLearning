@@ -94,7 +94,6 @@
   <ItemGroup>
     <Compile Include="ContentReader.cs" />
     <Compile Include="HomeJsonTests.cs" />
-    <Compile Include="HttpClientFactory.cs" />
     <Compile Include="JsonExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
