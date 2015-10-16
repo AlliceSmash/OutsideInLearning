@@ -1,5 +1,4 @@
 ﻿using Microsoft.Owin.Testing;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
 using Xunit;
@@ -53,8 +52,7 @@ namespace RunningJournalApi.AcceptanceTests
             server.HttpClient.PostAsJsonAsync("/journal", json).Wait();
             var response = server.HttpClient.GetAsync("/journal").Result;
             var actual = response.Content.ReadAsJsonAsync().Result;
-            var actualJObjects = actual.entries.Children<JObject>();
-            Assert.Contains(expected, actualJObjects);
+            Assert.Contains(expected, actual.entries);
         }
     }
 }
