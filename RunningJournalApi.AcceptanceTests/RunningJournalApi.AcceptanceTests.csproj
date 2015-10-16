@@ -95,6 +95,7 @@
     <Compile Include="ContentReader.cs" />
     <Compile Include="HomeJsonTests.cs" />
     <Compile Include="JsonExtensions.cs" />
+    <Compile Include="OwinTestConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

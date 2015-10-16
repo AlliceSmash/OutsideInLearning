@@ -10,7 +10,7 @@ namespace RunningJournalApi.AcceptanceTests
         private TestServer server;
         public HomeJsonTests()
         {
-            server = TestServer.Create<Startup>();
+            server = TestServer.Create<OwinTestConfig>();
         }
 
         public void Dispose()
