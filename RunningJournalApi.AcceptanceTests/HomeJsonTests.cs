@@ -92,7 +92,9 @@ namespace RunningJournalApi.AcceptanceTests
 
             var connStr = ConfigurationManager.ConnectionStrings["running-journal"].ConnectionString;
             var db = Database.OpenConnection(connStr);
-            var userId = db.User.Instert(UserName: "foo").UserId;
+           var user= db.User.Insert(UserName: "foo");
+            var userId = user.UserId;
+     //       var userId = db.User.Instert(UserName: "foo").UserId;
             entry.UserId = userId;
 
             db.JournalEntry.Insert(entry);
