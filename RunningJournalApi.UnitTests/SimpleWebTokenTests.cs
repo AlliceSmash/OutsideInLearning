@@ -48,5 +48,35 @@ namespace RunningJournalApi.UnitTests
             var actual = sut.ToString();
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData( "foo" )]
+        [InlineData("invalid")]
+        [InlineData(null)]
+        public void TryParseInvalidStringReturnsFalse(string invalidString)
+        {
+            SimpleWebToken dummy;
+            bool actual = SimpleWebToken.TryParse(invalidString, out dummy);
+            Assert.False(actual);
+        }
+
+        [Theory]
+        [InlineData(new object[] { new string[0]})]
+        [InlineData(new object[] { new[] { "foo|bar" }})]
+        [InlineData(new object[] { new[] { "foo|bar" ,"baz|qux" } })]
+        public void TryParsevalidStringReturnsCorrectResult(string[] keysAndValues)
+        {
+            var expected = keysAndValues
+               .Select(s => s.Split('|'))
+               .Select(s => new Claim(s[0], s[1]))
+               .ToArray();
+
+            var tokenString = new SimpleWebToken(expected).ToString();
+            SimpleWebToken actual;
+            var isValid = SimpleWebToken.TryParse(tokenString, out actual);
+            Assert.True(isValid, "Token string was not valid");
+
+            Assert.True(expected.SequenceEqual(actual, new ClaimComparer()));
+        }
     }
 }

@@ -33,5 +33,26 @@ namespace RunningJournalApi
                 .Aggregate((x, y) => string.Format("{0}&{1}", x, y));
         }
 
+        public static bool TryParse(string tokenString, out SimpleWebToken token)
+        {
+            token = null;
+            if ( tokenString == string.Empty)
+            {
+                token = new SimpleWebToken();
+                return true;
+            }
+            if (tokenString == null)
+                return false;
+
+            var claimPairs = tokenString.Split('&').ToArray();
+            if(!claimPairs.All(c => c.Contains("=")))
+            {
+                return false;
+            }
+            var claims = claimPairs.Select(c => c.Split('='))
+                .Select(c => new Claim(c[0], c[1]));
+            token = new SimpleWebToken(claims.ToArray());
+            return true;
+        }
     }
 }
