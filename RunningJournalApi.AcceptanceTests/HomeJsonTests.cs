@@ -2,13 +2,14 @@
 using Simple.Data;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Net.Http;
 using Xunit;
 
 namespace RunningJournalApi.AcceptanceTests
 {
-    public class HomeJsonTests :IDisposable
+    public class HomeJsonTests : IDisposable
     {
         private TestServer server;
         public HomeJsonTests()
@@ -22,6 +23,7 @@ namespace RunningJournalApi.AcceptanceTests
         }
 
         [Fact]
+        [UseDatabase]
         public void GetResponseReturnCorrectStatusCode()
         {
             var response = server.HttpClient.GetAsync("/journal").Result;
@@ -29,6 +31,7 @@ namespace RunningJournalApi.AcceptanceTests
         }
 
         [Fact]
+        [UseDatabase]
         public void PostReturnCorrectStatusCode()
         {
             var json = new
@@ -43,6 +46,7 @@ namespace RunningJournalApi.AcceptanceTests
         }
 
         [Fact]
+        [UseDatabase]
         public void GetAfterPostReturnCorrectStatusCode()
         {
             var json = new
@@ -83,6 +87,7 @@ namespace RunningJournalApi.AcceptanceTests
         [UseDatabase]
         public void GetRootReturnsCorrectEntryFromDataBase()
         {
+            SimpleDataTraceSources.TraceSource.Switch.Level = SourceLevels.Verbose;
             dynamic entry = new ExpandoObject();
             entry.time = DateTimeOffset.Now;
             entry.distance = 6000;
@@ -92,9 +97,8 @@ namespace RunningJournalApi.AcceptanceTests
 
             var connStr = ConfigurationManager.ConnectionStrings["running-journal"].ConnectionString;
             var db = Database.OpenConnection(connStr);
-           var user= db.User.Insert(UserName: "foo");
+            var user = db.User.Insert(UserName: "foo");
             var userId = user.UserId;
-     //       var userId = db.User.Instert(UserName: "foo").UserId;
             entry.UserId = userId;
 
             db.JournalEntry.Insert(entry);
